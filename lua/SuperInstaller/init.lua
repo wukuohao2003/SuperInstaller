@@ -12,7 +12,7 @@ local function clean() end
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
-		package_path = vim.fb.stdpath("data") .. "/site/super_installer/start",
+		package_path = vim.fn.stdpath("data") .. "/site/super_installer/start",
 		install_methods = "ssh",
 		display = {
 			progress_bar = {
