@@ -1,7 +1,5 @@
 local M = {}
 
-local package_path = vim.fb.stdpath("data") .. "/site/super_installer/start"
-
 local function install(opt)
 	if opt.progress_bar == true then
 		vim.notify("正在以进度条形式下载插件...")
@@ -14,6 +12,7 @@ local function clean() end
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
+		package_path = vim.fb.stdpath("data") .. "/site/super_installer/start",
 		install_methods = "ssh",
 		display = {
 			progress_bar = {
