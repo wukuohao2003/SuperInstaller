@@ -29,7 +29,7 @@ M.setup = function(config)
 		use = {},
 	}, config or {})
 	vim.keymap.set("n", "<C-i>", function()
-		install({ progress_bar = configure.display.progress_bar })
+		install({ progress_bar = configure.display.progress_bar.enable })
 	end)
 end
 
