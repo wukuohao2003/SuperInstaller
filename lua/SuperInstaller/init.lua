@@ -4,7 +4,16 @@ local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function install(opt)
 	for _, value in ipairs(opt.plugin) do
-		vim.api.nvim_command("!git clone git@github.com:" .. value .. " " .. install_path .. "/SuperInstaller")
+		local function isDirectoryExists(path)
+			local stat = vim.loop.fs_stat(path)
+			return stat and stat.type == "directory"
+		end
+		local folderPath = install_path .. value
+		if isDirectoryExists(folderPath) then
+			return
+		else
+			vim.api.nvim_command("!git clone git@github.com:" .. value .. " " .. install_path .. "/SuperInstaller")
+		end
 	end
 end
 local function updae() end
