@@ -6,13 +6,10 @@ local function setup(option)
 		display = {
 			width = ui.width / 2,
 			height = ui.height / 2,
-			position = {
-				x = "center",
-				y = "center",
-			},
 		},
 		ist_path = "",
 		ist_methods = "HTTPS",
+		istl_plugin = {},
 	}, option or {})
 	vim.keymap.set("n", "<C-T>", function()
 		local buf = vim.api.nvim_create_buf(true, true)
