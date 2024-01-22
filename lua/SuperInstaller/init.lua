@@ -1,9 +1,9 @@
-local M = {
-	package_path = vim.fb.stdpath("data") .. "/site/super_installer/start",
-}
+local M = {}
+
+local package_path = vim.fb.stdpath("data") .. "/site/super_installer/start"
 
 local function install(opt)
-	if opt.progress_bar then
+	if opt.progress_bar == true then
 		vim.notify("正在以进度条形式下载插件...")
 	else
 		vim.notify("中止下载...")
