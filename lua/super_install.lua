@@ -30,7 +30,7 @@ local function setup(option)
 		ist_path = "",
 		ist_methods = "HTTPS",
 	}, option or {})
-	vim.keymap.set("n", "<leader>st", function()
+	vim.keymap.set("n", "<C-t>", function()
 		open_window(main.display.width, main.display.height, ui)
 	end, {})
 end
