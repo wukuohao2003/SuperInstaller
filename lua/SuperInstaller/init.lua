@@ -5,6 +5,8 @@ local M = {
 local function install(opt)
 	if opt.progress_bar then
 		vim.notify("正在以进度条形式下载插件...")
+	else
+		vim.notify("中止下载...")
 	end
 end
 local function updae() end
