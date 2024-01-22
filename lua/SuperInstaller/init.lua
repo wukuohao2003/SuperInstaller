@@ -1,10 +1,10 @@
 local M = {}
 
+local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
+
 local function install(opt)
-	if opt.progress_bar == true then
-		vim.notify("正在以进度条形式下载插件...")
-	else
-		vim.notify("中止下载...")
+	for _, value in ipairs(opt.plugin) do
+		vim.api.nvim_command("!git clone git@github.com:" .. value .. " " .. install_path .. "/SuperInstaller")
 	end
 end
 local function updae() end
@@ -12,14 +12,13 @@ local function clean() end
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
-		package_path = vim.fn.stdpath("data") .. "/site/super_installer/start",
 		install_methods = "ssh",
 		display = {
 			progress_bar = {
 				enable = true,
 				title = "",
 				title_pos = "center",
-				size = { w = 60, h = 7 },
+				vasize = { w = 60, h = 7 },
 				position = "cc",
 				style = {
 					f_color = "",
@@ -30,7 +29,7 @@ M.setup = function(config)
 		use = {},
 	}, config or {})
 	vim.keymap.set("n", "<C-i>", function()
-		install({ progress_bar = configure.display.progress_bar.enable })
+		install({ progress_bar = configure.display.progress_bar.enable, plugin = configure.use })
 	end)
 end
 
