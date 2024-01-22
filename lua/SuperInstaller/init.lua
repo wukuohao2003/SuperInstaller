@@ -4,7 +4,7 @@ local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function isExit(opt)
 	local resp = vim.fn.glob(install_path .. "/" .. vim.split(opt, "/")[2])
-	if vim.fn.empty(resp) > 0 then
+	if vim.fn.empty(resp) < 0 then
 		return
 	else
 		vim.api.nvim_command("!git clone git@github.com:" .. opt .. " " .. install_path .. "/SuperInstaller")
