@@ -14,7 +14,6 @@ local function setup(option)
 		ist_path = "",
 		ist_methods = "HTTPS",
 	}, option or {})
-
 	vim.keymap.set("n", "<C-T>", function()
 		local buf = vim.api.nvim_create_buf(true, true)
 		local opts = {
