@@ -18,7 +18,7 @@ local function SuperSyncdDownload(opt)
 		print(vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0)
 		if vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0 then
 			vim.api.nvim_command(
-				"git clone --depth=1 " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2]
+				"!git clone --depth=1 " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2]
 			)
 		else
 			return false
