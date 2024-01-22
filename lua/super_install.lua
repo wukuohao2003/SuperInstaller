@@ -1,4 +1,4 @@
-local istl = {}
+local main = {}
 
 local function open_window(width, height, ui)
 	local buf = vim.api.nvim_create_buf(true, true)
@@ -16,7 +16,7 @@ end
 
 local function setup(option)
 	local ui = vim.api.nvim_list_uis()[1]
-	local main = vim.tbl_extend("force", {
+	main = vim.tbl_extend("force", {
 		display = {
 			float = true,
 			width = ui.width / 2,
@@ -29,7 +29,7 @@ local function setup(option)
 		ist_path = "",
 		ist_methods = "HTTPS",
 	}, option or {})
-	vim.keymap.set("n", "<leader>aa", function()
+	vim.keymap.set("n", "<leader>st", function()
 		open_window(main.display.width, main.display.height, ui)
 	end, {})
 end
