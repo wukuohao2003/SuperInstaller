@@ -1,6 +1,7 @@
-local main = {}
+local istl = {}
 
 local function open_window(width, height, ui)
+	vim.notify("我成功执行了哦")
 	local buf = vim.api.nvim_create_buf(true, true)
 	local opts = {
 		relative = "editor",
@@ -16,7 +17,7 @@ end
 
 local function setup(option)
 	local ui = vim.api.nvim_list_uis()[1]
-	main = vim.tbl_extend("force", {
+	local main = vim.tbl_extend("force", {
 		display = {
 			float = true,
 			width = ui.width / 2,
