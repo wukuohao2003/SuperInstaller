@@ -1,8 +1,8 @@
-local istl = {}
+local main = {}
 
 local function setup(option)
 	local ui = vim.api.nvim_list_uis()[1]
-	local main = vim.tbl_extend("force", {
+	main = vim.tbl_extend("force", {
 		display = {
 			width = ui.width / 2,
 			height = ui.height / 2,
