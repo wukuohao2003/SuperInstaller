@@ -4,7 +4,7 @@ local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function install(opt)
 	for _, value in ipairs(opt.plugin) do
-		vim.api.nvim_command("!git pull git@github.com:" .. value .. " " .. install_path .. "/SuperInstaller")
+		vim.api.nvim_command("!git pull git@github.com:" .. value .. " " .. install_path)
 	end
 end
 local function updae() end
