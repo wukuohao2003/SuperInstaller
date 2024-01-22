@@ -3,15 +3,8 @@ local M = {}
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function isExit(opt)
-	local lfs = require("lfs")
-
-	local attributes = lfs.attributes(install_path .. "/" .. opt)
-
-	if attributes and attributes.mode == "directory" then
-		return
-	else
-		vim.api.nvim_command("!git clone git@github.com:" .. opt .. " " .. install_path .. "/SuperInstaller")
-	end
+	local resp = vim.fn.glob(install_path)
+	vim.notify(resp)
 end
 
 local function install(opt)
