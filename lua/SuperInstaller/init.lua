@@ -3,7 +3,7 @@ local M = {}
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function isExit(opt)
-	local resp = vim.fn.glob(install_path)
+	local resp = vim.fn.glob(install_path .. "/" .. opt)
 	vim.notify(resp)
 end
 
