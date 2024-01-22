@@ -1,12 +1,12 @@
 local istl = {}
 
-local function open_window(istl)
+local function open_window(width, height, ui)
 	local buf = vim.api.nvim_create_buf(true, true)
 	local opts = {
 		relative = "editor",
 		title = "SuperInstaller",
-		col = istl.position.x,
-		row = istl.position.y,
+		col = (ui.width - width) / 2,
+		row = (ui.height - height) / 2,
 		style = "minimal",
 		border = "rounder",
 		title_pos = "center",
@@ -16,7 +16,7 @@ end
 
 local function setup(option)
 	local ui = vim.api.nvim_list_uis()[1]
-	istl = vim.tbl_extend("force", {
+	local main = vim.tbl_extend("force", {
 		display = {
 			float = true,
 			width = ui.width / 2,
@@ -29,7 +29,7 @@ local function setup(option)
 		ist_path = "",
 		ist_methods = "HTTPS",
 	}, option or {})
-	vim.keymap.set("n", "<leader>st", open_window(istl))
+	vim.keymap.set("n", "<leader>st", open_window(main.display.width, main.display.height, ui))
 end
 
 return {
