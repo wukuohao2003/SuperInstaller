@@ -17,9 +17,9 @@ local function installMethods(opt, use)
 	local mode = Mode(opt.mode)
 	local exists = vim.fn.isdirectory(install_path .. vim.split(use.use, "/")[2]) == 1
 	if exists then
-		return ("!cd " .. install_path .. "/" .. vim.split(use.use, "/")[2] .. " && git pull")
+		return ("cd " .. install_path .. "/" .. vim.split(use.use, "/")[2] .. " && git pull")
 	else
-		return ("!git clone " .. mode .. use.use .. " " .. install_path .. "/" .. vim.split(use.use, "/")[2])
+		return ("git clone " .. mode .. use.use .. " " .. install_path .. "/" .. vim.split(use.use, "/")[2])
 	end
 end
 
