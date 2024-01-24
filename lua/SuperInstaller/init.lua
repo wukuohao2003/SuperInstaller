@@ -44,9 +44,21 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
+	local function job_exit_cb(_, code)
+		if code ~= 0 then
+			-- Git 命令执行失败
+			-- 在进度条上显示错误消息
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Error: Git command failed." })
+		else
+			-- Git 命令执行成功
+			-- 在进度条上显示成功消息
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Installation successful." })
+		end
+	end
+
 	for _, use in ipairs(opt.use) do
 		local cmd = installMethods({ mode = opt.mode }, { use = use }) -- 替换成你需要执行的 Git 指令
-		local job_id = vim.fn.jobstart(cmd)
+		local job_id = vim.fn.jobstart(cmd, { on_exit = job_exit_cb })
 	end
 end
 
