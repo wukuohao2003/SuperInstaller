@@ -46,7 +46,7 @@ local function progressInstall(opt)
 
 	for _, use in ipairs(opt.use) do
 		local cmd = installMethods({ mode = opt.mode }, { use = use }) -- 替换成你需要执行的 Git 指令
-		vim.fn.jobstart(cmd, {})
+		vim.fn.jobstart(cmd)
 	end
 end
 
