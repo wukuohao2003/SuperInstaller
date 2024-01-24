@@ -46,22 +46,7 @@ local function progressInstall(opt)
 
 	for _, use in ipairs(opt.use) do
 		local cmd = installMethods({ mode = opt.mode }, { use = use }) -- 替换成你需要执行的 Git 指令
-		vim.fn.jobstart(cmd, {
-			on_stdout = function(_, data, _)
-				vim.api.nvim_buf_set_lines(buf, -1, -1, false, vim.split(data, "\n"))
-			end,
-			on_stderr = function(_, data, _)
-				vim.api.nvim_buf_set_lines(buf, -1, -1, false, vim.split(data, "\n"))
-			end,
-			on_exit = function(_, exit_code)
-				if exit_code == 0 then
-					vim.api.nvim_buf_set_lines(buf, -1, -1, false, { "Done!" })
-				else
-					vim.api.nvim_buf_set_lines(buf, -1, -1, false, { "Error!" })
-				end
-				vim.api.nvim_win_close(win, true)
-			end,
-		})
+		vim.fn.jobstart(cmd, {})
 	end
 end
 
