@@ -24,7 +24,7 @@ local function installMethods(opt, use)
 end
 
 local function progressInstall(opt)
-	local win_width = 40
+	local win_width = 60
 	local win_height = 1
 	local win_row = math.floor((vim.o.lines - win_height) / 2)
 	local win_col = math.floor((vim.o.columns - win_width) / 2)
@@ -50,12 +50,19 @@ local function progressInstall(opt)
 				if code ~= 0 then
 					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Error: Git command failed." })
 				else
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { use .. "Installation successful." })
+					vim.api.nvim_buf_set_lines(
+						buf,
+						0,
+						-1,
+						false,
+						{ "Install " .. vim.split(use, "/")[2] .. " successful ..." }
+					)
 				end
 			end,
 			stdout_buffered = true,
 			stderr_buffered = true,
 		})
+		vim.api.nvim_win_close(win, true)
 	end
 
 	for _, use in ipairs(opt.use) do
