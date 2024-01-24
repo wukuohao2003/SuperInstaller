@@ -62,9 +62,8 @@ local function progressInstall(opt)
 			stdout_buffered = true,
 			stderr_buffered = true,
 		})
+		vim.api.nvim_win_close(win, true)
 	end
-
-	vim.api.nvim_win_close(win, true)
 end
 
 local function SuperSyncdDownload(opt)
