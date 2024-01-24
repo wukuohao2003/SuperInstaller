@@ -25,7 +25,7 @@ end
 
 local function progressInstall(opt)
 	local win_width = 40
-	local win_height = 3
+	local win_height = 1
 	local win_row = math.floor((vim.o.lines - win_height) / 2)
 	local win_col = math.floor((vim.o.columns - win_width) / 2)
 	local buf = vim.api.nvim_create_buf(false, true)
