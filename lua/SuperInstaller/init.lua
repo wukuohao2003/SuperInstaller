@@ -24,25 +24,27 @@ local function installMethods(opt, use)
 end
 
 local function progressInstall(opt)
-	local win_width = 60
-	local win_height = 1
-	local win_row = math.floor((vim.o.lines - win_height) / 2)
-	local win_col = math.floor((vim.o.columns - win_width) / 2)
-	local buf = vim.api.nvim_create_buf(false, true)
+	--[[local win_width = 60]]
+	--[[local win_height = 1]]
+	--[[local win_row = math.floor((vim.o.lines - win_height) / 2)]]
+	--[[local win_col = math.floor((vim.o.columns - win_width) / 2)]]
+	--[[local buf = vim.api.nvim_create_buf(false, true)]]
 
-	local opts = {
-		relative = "editor",
-		row = win_row,
-		col = win_col,
-		width = win_width,
-		height = win_height,
-		style = "minimal",
-		border = "rounded",
-		title = "install now ...",
-		title_pos = "center",
-	}
+	--[[local opts = {]]
+	--[[relative = "editor",]]
+	--[[row = win_row,]]
+	--[[col = win_col,]]
+	--[[width = win_width,]]
+	--[[height = win_height,]]
+	--[[style = "minimal",]]
+	--[[border = "rounded",]]
+	--[[title = "Pulling From Git ...",]]
+	--[[title_pos = "center",]]
+	--[[}]]
 
-	local win = vim.api.nvim_open_win(buf, true, opts)
+	--[[local win = vim.api.nvim_open_win(buf, true, opts)]]
+
+	local win, update_progress = M.create_progress_bar()
 
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
@@ -58,6 +60,7 @@ local function progressInstall(opt)
 						{ "Install " .. vim.split(use, "/")[2] .. " successful ..." }
 					)
 				end
+				update_progress(1)
 			end,
 			stdout_buffered = true,
 			stderr_buffered = true,
