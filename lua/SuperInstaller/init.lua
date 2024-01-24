@@ -14,15 +14,17 @@ local function Mode(mode)
 end
 
 local function SuperSyncdDownload(opt)
-	for _, value in ipairs(opt.plugin) do
+	for _, value in ipairs(opt.use) do
 		local mode = Mode(opt.mode)
-		if vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0 then
-			vim.api.nvim_command(
-				"!git clone " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2]
-			)
-		else
-			vim.api.nvim_command("!cd " .. install_path .. "/" .. vim.split(value, "/")[2] .. " || git pull")
-		end
+		print(vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]))
+	end
+end
+
+local a = function(value, mode)
+	if vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0 then
+		vim.api.nvim_command("!git clone " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2])
+	else
+		vim.api.nvim_command("!cd " .. install_path .. "/" .. vim.split(value, "/")[2] .. " || git pull")
 	end
 end
 
@@ -31,7 +33,7 @@ M.setup = function(config)
 		install_methods = "ssh",
 		display = {
 			progress_bar = {
-				enable = true,
+				enable = false,
 				title = "",
 				title_pos = "center",
 				size = { w = 60, h = 7 },
@@ -47,7 +49,7 @@ M.setup = function(config)
 	vim.keymap.set("n", "<C-i>", function()
 		SuperSyncdDownload({
 			progress_bar = configure.display.progress_bar.enable,
-			plugin = configure.use,
+			use = configure.use,
 			mode = configure.install_methods,
 		})
 	end)
