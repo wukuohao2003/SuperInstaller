@@ -44,17 +44,18 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	local function job_exit_cb(_, code, use)
-		if code ~= 0 then
-			vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Error: Git command failed." })
-		else
-			vim.api.nvim_buf_set_lines(buf, 0, -1, false, { use .. "Installation successful." })
-		end
-	end
-
 	local function createJob(cmd, use)
-		local job_id =
-			vim.fn.jobstart(cmd, { on_exit = job_exit_cb(use), stdout_buffered = true, stderr_buffered = true })
+		local job_id = vim.fn.jobstart(cmd, {
+			on_exit = function(_, code)
+				if code ~= 0 then
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Error: Git command failed." })
+				else
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { use .. "Installation successful." })
+				end
+			end,
+			stdout_buffered = true,
+			stderr_buffered = true,
+		})
 	end
 
 	for _, use in ipairs(opt.use) do
