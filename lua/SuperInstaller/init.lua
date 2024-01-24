@@ -16,11 +16,13 @@ end
 local function SuperSyncdDownload(opt)
 	for _, value in ipairs(opt.use) do
 		local mode = Mode(opt.mode)
-		print(vim.fn.isdirectory(install_path .. "/SuperInstaller"))
-		if vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0 then
-			os.execute("git clone " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2])
+		local exists = vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 1
+		if exists then
+			vim.api.nvim_command("!cd " .. install_path .. "/" .. vim.split(value, "/")[2] .. " && git pull")
 		else
-			os.execute("cd " .. install_path .. "/" .. vim.split(value, "/")[2] .. " && git pull")
+			vim.api.nvim_command(
+				"!git clone " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2]
+			)
 		end
 	end
 end
