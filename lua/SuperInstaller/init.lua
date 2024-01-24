@@ -42,17 +42,17 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	vim.api.nvim_buf_set_lines(
-		buf,
-		0,
-		-1,
-		false,
-		{ "Running Git command installMethods({ mode = opt.mode }, { use = use }" }
-	)
-
 	for _, use in ipairs(opt.use) do
+		vim.api.nvim_buf_set_lines(
+			buf,
+			0,
+			-1,
+			false,
+			{ "Running Git command " .. installMethods({ mode = opt.mode }, { use = use }) }
+		)
+
 		local cmd = installMethods({ mode = opt.mode }, { use = use }) -- 替换成你需要执行的 Git 指令
-		vim.fn.jobstart(cmd)
+		local job_id = vim.fn.jobstart(cmd)
 	end
 end
 
