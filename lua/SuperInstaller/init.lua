@@ -16,7 +16,7 @@ end
 local function SuperSyncdDownload(opt)
 	for _, value in ipairs(opt.use) do
 		local mode = Mode(opt.mode)
-		print(vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]))
+		print(vim.fn.isdirectory(install_path .. "/SuperInstaller"))
 	end
 end
 
