@@ -24,29 +24,28 @@ local function installMethods(opt, use)
 end
 
 local function progressInstall(opt)
-	--[[local win_width = 60]]
-	--[[local win_height = 1]]
-	--[[local win_row = math.floor((vim.o.lines - win_height) / 2)]]
-	--[[local win_col = math.floor((vim.o.columns - win_width) / 2)]]
-	--[[local buf = vim.api.nvim_create_buf(false, true)]]
+	local win_width = 60
+	local win_height = 1
+	local win_row = math.floor((vim.o.lines - win_height) / 2)
+	local win_col = math.floor((vim.o.columns - win_width) / 2)
+	local buf = vim.api.nvim_create_buf(false, true)
 
-	--[[local opts = {]]
-	--[[relative = "editor",]]
-	--[[row = win_row,]]
-	--[[col = win_col,]]
-	--[[width = win_width,]]
-	--[[height = win_height,]]
-	--[[style = "minimal",]]
-	--[[border = "rounded",]]
-	--[[title = "Pulling From Git ...",]]
-	--[[title_pos = "center",]]
-	--[[}]]
+	local opts = {
+		relative = "editor",
+		row = win_row,
+		col = win_col,
+		width = win_width,
+		height = win_height,
+		style = "minimal",
+		border = "rounded",
+		title = "Pulling From Git ...",
+		title_pos = "center",
+	}
 
-	--[[local win = vim.api.nvim_open_win(buf, true, opts)]]
+	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	local bar = require("progress_bar")
-
-	local win, update_progress = bar.create_progress_bar()
+	local progress = 0
+	local total_tasks = #opt.use
 
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
@@ -62,7 +61,11 @@ local function progressInstall(opt)
 						{ "Install " .. vim.split(use, "/")[2] .. " successful ..." }
 					)
 				end
-				update_progress(1)
+				progress = progress + 1
+				local percentage = math.floor((progress / total_tasks) * 100)
+				local progress_bar = string.rep("█", percentage / 2)
+				vim.api.nvim_win_set_config(win, { title = "Progress: " .. percentage .. "%", title_pos = "center" })
+				vim.api.nvim_buf_set_lines(buf, 1, -1, false, { "[" .. progress_bar .. "]" })
 			end,
 			stdout_buffered = true,
 			stderr_buffered = true,
