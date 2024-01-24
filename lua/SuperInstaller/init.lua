@@ -44,8 +44,8 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	local function createJob(cmd, use)
-		local job_id = vim.fn.jobstart(cmd, {
+	for _, use in ipairs(opt.use) do
+		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
 			on_exit = function(_, code)
 				if code ~= 0 then
 					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Error: Git command failed." })
@@ -62,12 +62,9 @@ local function progressInstall(opt)
 			stdout_buffered = true,
 			stderr_buffered = true,
 		})
-		vim.api.nvim_win_close(win, true)
 	end
 
-	for _, use in ipairs(opt.use) do
-		createJob(installMethods({ mode = opt.mode }, { use = use }), use)
-	end
+	vim.api.nvim_win_close(win, true)
 end
 
 local function SuperSyncdDownload(opt)
