@@ -6,7 +6,8 @@ local function Mode(mode)
 	local any = nil
 	if mode == "ssh" then
 		any = "git@gitub.com:"
-	else
+	end
+	if mode == "https" then
 		any = "https://github.com/"
 	end
 	return any
@@ -18,9 +19,10 @@ local function SuperSyncdDownload(opt)
 		print(vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0)
 		if vim.fn.isdirectory(install_path .. vim.split(value, "/")[2]) == 0 then
 			vim.api.nvim_command(
-				"!git pull " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2]
+				"!git clone " .. mode .. value .. " " .. install_path .. "/" .. vim.split(value, "/")[2]
 			)
 		else
+			vim.api.nvim_command("!cd " .. install_path .. "/" .. vim.split(value, "/")[2] .. " | git pull")
 			return false
 		end
 	end
