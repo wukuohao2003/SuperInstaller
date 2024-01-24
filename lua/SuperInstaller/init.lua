@@ -38,6 +38,7 @@ local function progressInstall(opt)
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
+		title = "",
 		title_pos = "center",
 	}
 
