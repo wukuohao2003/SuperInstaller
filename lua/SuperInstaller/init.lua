@@ -45,7 +45,7 @@ local function progressInstall(opt)
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
 			on_stdout = function(_, data, _)
-				local progress = string.match(data.concat(","), "Receiving objects: (%d+)%%")
+				local progress = string.match(tostring(data), "Receiving objects: (%d+)%%")
 				print(progress)
 			end,
 		})
