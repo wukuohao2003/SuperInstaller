@@ -43,12 +43,24 @@ local function progressInstall(opt)
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
 	local progress = 0
-	local total_tasks = #opt.use
 
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
 			on_stdout = function(_, data, _)
 				print(data)
+				local progress_line = data:match("Receiving objects: (%d+)%%")
+				if progress_line then
+					progress = tonumber(progress_line)
+					local progress_bar = string.rep("█", progress / 2)
+					vim.api.nvim_win_set_config(win, {
+						title = "Pulling From Git: " .. progress .. "%",
+						title_pos = "center",
+					})
+					vim.api.nvim_buf_set_lines(buf, 1, -1, false, { progress_bar })
+				else
+					-- 处理其他 Git 命令的输出
+					vim.api.nvim_buf_set_lines(buf, 1, -1, false, { data })
+				end
 			end,
 		})
 	end
