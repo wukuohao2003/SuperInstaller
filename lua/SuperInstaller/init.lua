@@ -37,8 +37,9 @@ local function progressInstall(opt)
 		width = win_width,
 		height = win_height,
 		style = "minimal",
-		border = "single",
+		border = "rounded",
 		title = "install now ...",
+		position = "center",
 	}
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
