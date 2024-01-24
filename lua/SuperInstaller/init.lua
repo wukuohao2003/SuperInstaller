@@ -38,7 +38,6 @@ local function progressInstall(opt)
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
-		title = "Pulling From Git ...",
 		title_pos = "center",
 	}
 
@@ -50,21 +49,13 @@ local function progressInstall(opt)
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
 			on_exit = function(_, code)
-				if code ~= 0 then
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Error: Git command failed." })
-				else
-					vim.api.nvim_buf_set_lines(
-						buf,
-						0,
-						-1,
-						false,
-						{ "Install " .. vim.split(use, "/")[2] .. " successful ..." }
-					)
-				end
 				progress = progress + 1
 				local percentage = math.floor((progress / total_tasks) * 100)
 				local progress_bar = string.rep("█", percentage / 2)
-				vim.api.nvim_win_set_config(win, { title = "Progress: " .. percentage .. "%", title_pos = "center" })
+				vim.api.nvim_win_set_config(
+					win,
+					{ title = "Pulling From Git: " .. percentage .. "%", title_pos = "center" }
+				)
 				vim.api.nvim_buf_set_lines(buf, 1, -1, false, { "[" .. progress_bar .. "]" })
 			end,
 			stdout_buffered = true,
