@@ -44,7 +44,9 @@ local function progressInstall(opt)
 
 	--[[local win = vim.api.nvim_open_win(buf, true, opts)]]
 
-	local win, update_progress = M.create_progress_bar()
+	local bar = require("progress_bar")
+
+	local win, update_progress = bar.create_progress_bar()
 
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
