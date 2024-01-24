@@ -47,7 +47,7 @@ local function progressInstall(opt)
 
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
-			on_stderr = function(_, data, _)
+			on_stdout = function(_, data, _)
 				vim.api.nvim_buf_set_lines(buf, 0, -1, false, { data })
 			end,
 		})
