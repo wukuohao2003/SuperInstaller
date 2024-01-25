@@ -50,7 +50,7 @@ local function progressInstall(opt)
 				for _, item in ipairs(data) do
 					print(item)
 					if item.progress then
-						local percent = data:match("(d%+)%%")
+						local percent = tonumber(item.progress)
 						if percent then
 							result = "Cloing: " .. percent .. "%"
 							vim.api.nvim_buf_set_lines(buf, 0, 1, false, { result })
