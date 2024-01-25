@@ -45,13 +45,35 @@ local function progressInstall(opt)
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode, use = use }), {
 			on_stdout = function(_, data, _)
-				print(data[1])
 				local progress = string.match(data[1], "^Receiving objects: (%d+)%%")
 				if progress then
-					print("Download progress: " .. progress .. "%")
+					-- 更新窗口内容显示进度信息
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Download progress: " .. progress .. "%" })
+
+					-- 刷新窗口
+					vim.api.nvim_win_call(win, function()
+						vim.cmd("redraw")
+					end)
 				end
 			end,
 		})
+
+		local timer = vim.loop.new_timer()
+		timer:start(
+			500,
+			500,
+			vim.schedule_wrap(function()
+				if vim.fn.jobwait({ job_id }, 0)[1] == -1 then
+					-- 进程已结束，停止计时器
+					timer:stop()
+					timer:close()
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Download completed!" })
+					vim.api.nvim_win_call(win, function()
+						vim.cmd("redraw")
+					end)
+				end
+			end)
+		)
 	end
 end
 
