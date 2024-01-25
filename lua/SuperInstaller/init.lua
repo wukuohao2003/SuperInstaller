@@ -25,7 +25,7 @@ end
 
 local function progressInstall(opt)
 	local win_width = 50
-	local win_height = 10
+	local win_height = 1
 	local win_row = math.floor((vim.o.lines - win_height) / 2)
 	local win_col = math.floor((vim.o.columns - win_width) / 2)
 	local buf = vim.api.nvim_create_buf(false, true)
@@ -48,6 +48,7 @@ local function progressInstall(opt)
 		local async_job = vim.fn.jobstart(command, {
 			on_stdout = function(_, data, _)
 				for _, item in ipairs(data) do
+					print(item)
 					if item.progress then
 						local percent = data:match("(d%+)%%")
 						if percent then
