@@ -46,17 +46,34 @@ local function progressInstall(opt)
 		local command = installMethods({ mode = opt.mode, use = use })
 		local result = nil
 		local async_job = vim.fn.jobstart(command, {
-			on_stdout = vim.schedule_warp(function(_, data, _)
+			on_stdout = function(_, data, _)
 				local percent = data:match("(d%+)%%")
 				if percent then
 					result = "Cloing: " .. percent .. "%"
 					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
 				end
-			end),
+			end,
 			on_exit = function(_, _)
 				vim.api.nvim_win_close(win, true)
 			end,
 		})
+
+		local timer = vim.loop.new_timer()
+		timer:start(
+			500,
+			500,
+			vim.schedule_wrap(function()
+				if vim.fn.jobwait({ async_job }, 0)[1] == -1 then
+					-- 进程已结束，停止计时器
+					timer:stop()
+					timer:close()
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Download completed!" })
+					vim.api.nvim_win_call(win, function()
+						vim.cmd("redraw")
+					end)
+				end
+			end)
+		)
 	end
 end
 
