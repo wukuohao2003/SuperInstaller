@@ -43,37 +43,22 @@ local function progressInstall(opt)
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
 	for _, use in ipairs(opt.use) do
-		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode, use = use }), {
-			on_stdout = function(_, data, _)
-				local progress = string.match(data[1], "^Receiving objects: (%d+)%%")
-				if progress then
-					-- 更新窗口内容显示进度信息
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Download progress: " .. progress .. "%" })
-
-					-- 刷新窗口
-					vim.api.nvim_win_call(win, function()
-						vim.cmd("redraw")
-					end)
-				end
-			end,
-		})
-
-		local timer = vim.loop.new_timer()
-		timer:start(
-			500,
-			500,
-			vim.schedule_wrap(function()
-				if vim.fn.jobwait({ job_id }, 0)[1] == -1 then
-					-- 进程已结束，停止计时器
-					timer:stop()
-					timer:close()
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Download completed!" })
-					vim.api.nvim_win_call(win, function()
-						vim.cmd("redraw")
-					end)
-				end
-			end)
-		)
+		local command = installMethods({ mode = opt.mode, use = use })
+		local handle = io.popen(command)
+		local result = nil
+		while true do
+			local line = handle:read()
+			if not line then
+				break
+			end
+			local percent = line:match("(d%+)%%")
+			if percent then
+				result = "Cloing: " .. percent .. "%"
+				vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
+				vim.api.nvim_win_set_cursor(win, { win_height, 0 })
+			end
+		end
+		handle:close()
 	end
 end
 
