@@ -54,7 +54,7 @@ local function progressInstall(opt)
 					if item.progress then
 						local percent = tonumber(item.progress)
 						if percent then
-							result = "Cloing: " .. percent .. "%"
+							result = "Cloing: " .. tostring(percent) .. "%"
 							vim.api.nvim_buf_set_lines(buf, 0, 1, false, { result })
 						end
 					end
