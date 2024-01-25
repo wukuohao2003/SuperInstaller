@@ -3,23 +3,23 @@ local M = {}
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function Mode(mode)
-	local any = nil
+	local git_mode = nil
 	if mode == "ssh" then
-		any = "git@gitub.com:"
+		git_mode = "git@gitub.com:"
 	end
 	if mode == "https" then
-		any = "https://github.com/"
+		git_mode = "https://github.com/"
 	end
-	return any
+	return git_mode
 end
 
-local function installMethods(opt, use)
+local function installMethods(opt)
 	local mode = Mode(opt.mode)
-	local exists = vim.fn.isdirectory(install_path .. vim.split(use.use, "/")[2]) == 1
+	local exists = vim.fn.isdirectory(install_path .. vim.split(opt.use, "/")[2]) == 1
 	if exists then
-		return ("cd " .. install_path .. "/" .. vim.split(use.use, "/")[2] .. " && git pull")
+		return ("cd " .. install_path .. "/" .. vim.split(opt.use, "/")[2] .. " && git pull")
 	else
-		return ("git clone " .. mode .. use.use .. " " .. install_path .. "/" .. vim.split(use.use, "/")[2])
+		return ("git clone " .. mode .. opt.use .. " " .. install_path .. "/" .. vim.split(opt.use, "/")[2])
 	end
 end
 
@@ -43,7 +43,7 @@ local function progressInstall(opt)
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
 	for _, use in ipairs(opt.use) do
-		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode }, { use = use }), {
+		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode, use = use }), {
 			on_stdout = function(_, data, _)
 				for _, line in ipairs(data) do
 					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { line })
@@ -75,13 +75,11 @@ M.setup = function(config)
 		},
 		use = {},
 	}, config or {})
-	vim.keymap.set("n", "<C-i>", function()
-		SuperSyncdDownload({
-			progress_bar = configure.display.progress_bar.enable,
-			use = configure.use,
-			mode = configure.install_methods,
-		})
-	end)
+	vim.cmd("!command superSyncDownload " .. SuperSyncdDownload({
+		progress_bar = configure.display.progress_bar.enable,
+		use = configure.use,
+		mode = configure.install_methods,
+	}))
 end
 
 return {
