@@ -81,7 +81,7 @@ M.setup = function(config)
 			.. configure.display.progress_bar.enable
 			.. ","
 			.. "use ="
-			.. configure.use
+			.. tostring(configure.use)
 			.. ","
 			.. "mode ="
 			.. configure.install_methods
