@@ -46,7 +46,7 @@ local function progressInstall(opt)
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode, use = use }), {
 			on_stdout = function(_, data, _)
 				print(data)
-				local progress = string.match(vim.inspect(data), "^Receiving objects: (%d+)%%")
+				local progress = string.match(data, "^Receiving objects: (%d+)%%")
 				if progress then
 					print("Download progress: " .. progress .. "%")
 				end
