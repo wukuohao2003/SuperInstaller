@@ -76,7 +76,7 @@ M.setup = function(config)
 		use = {},
 	}, config or {})
 	vim.cmd(
-		"command! superSyncDownload "
+		"command! SuperSyncDownload "
 			.. "SuperSyncdDownload({progress_bar ="
 			.. tostring(configure.display.progress_bar.enable)
 			.. ","
