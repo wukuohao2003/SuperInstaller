@@ -52,14 +52,14 @@ local function progressInstall(opt)
 						local percent = data:match("(d%+)%%")
 						if percent then
 							result = "Cloing: " .. percent .. "%"
-							vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
+							vim.api.nvim_buf_set_lines(buf, 0, 1, false, { result })
 						end
 					end
 				end
 			end,
 			on_exit = function(_, code, _)
 				if code ~= 0 then
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { code })
+					vim.api.nvim_buf_set_lines(buf, 0, 1, false, { code })
 				else
 					vim.api.nvim_win_close(win, true)
 				end
