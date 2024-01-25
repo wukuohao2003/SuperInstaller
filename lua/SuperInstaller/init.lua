@@ -43,9 +43,7 @@ local function progressInstall(opt)
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
 	for _, use in ipairs(opt.use) do
-		local process = vim.loop.spawn(installMethods({ mode = Mode(opt.mode), use = use }), {
-			stdio = { nil, nil, nil },
-		})
+		local process = vim.loop.spawn(installMethods({ mode = opt.mode, use = use }), { stdio = { nil, nil, nil } })
 
 		local progress = ""
 		local handle = vim.loop.new_pipe(false)
