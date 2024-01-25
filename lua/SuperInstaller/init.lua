@@ -43,15 +43,30 @@ local function progressInstall(opt)
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
 	for _, use in ipairs(opt.use) do
-		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode, use = use }), {
-			on_stdout = function(_, data, _)
-				print(vim.inspect(data))
-				local progress = string.match(vim.inspect(data), "^Receiving objects: (%d+)%%")
-				if progress then
-					print("Download progress: " .. progress .. "%")
-				end
-			end,
+		local process = vim.loop.spawn(installMethods({ mode = Mode(opt.mode), use = use }), {
+			stdio = { nil, nil, nil },
 		})
+
+		local progress = ""
+		local handle = vim.loop.new_pipe(false)
+
+		vim.loop.read_start(process.stdout, function(err, data)
+			assert(not err, err)
+			if data then
+				progress = data
+			else
+				handle:close()
+			end
+		end)
+
+		vim.schedule(function()
+			local num = string.match(progress, "%d+%%")
+			if num then
+				print("Download progress: " .. num)
+			else
+				print("Download progress: unknown")
+			end
+		end)
 	end
 end
 
