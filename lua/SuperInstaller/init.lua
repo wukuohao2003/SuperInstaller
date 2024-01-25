@@ -53,27 +53,14 @@ local function progressInstall(opt)
 					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
 				end
 			end,
-			on_exit = function(_, _)
-				vim.api.nvim_win_close(win, true)
+			on_exit = function(_, code, _)
+				if code ~= 0 then
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { code })
+				else
+					vim.api.nvim_win_close(win, true)
+				end
 			end,
 		})
-
-		local timer = vim.loop.new_timer()
-		timer:start(
-			500,
-			500,
-			vim.schedule_wrap(function()
-				if vim.fn.jobwait({ async_job }, 0)[1] == -1 then
-					-- 进程已结束，停止计时器
-					timer:stop()
-					timer:close()
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Download completed!" })
-					vim.api.nvim_win_call(win, function()
-						vim.cmd("redraw")
-					end)
-				end
-			end)
-		)
 	end
 end
 
