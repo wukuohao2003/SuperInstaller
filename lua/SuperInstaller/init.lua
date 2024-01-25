@@ -44,20 +44,19 @@ local function progressInstall(opt)
 
 	for _, use in ipairs(opt.use) do
 		local command = installMethods({ mode = opt.mode, use = use })
-		local handle = io.popen(command)
 		local result = nil
-		while true do
-			local line = handle:read()
-			if not line then
-				break
-			end
-			local percent = line:match("(d%+)%%")
-			if percent then
-				result = "Cloing: " .. percent .. "%"
-				vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
-			end
-		end
-		handle:close()
+		local async_job = vim.fn.jobstart(command, {
+			on_stdout = function(_, data, _)
+				local percent = data:match("(d%+)%%")
+				if percent then
+					result = "Cloing: " .. percent .. "%"
+					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
+				end
+			end,
+			on_exit = function(_, _)
+				vim.api.nvim_win_close(win, true)
+			end,
+		})
 	end
 end
 
