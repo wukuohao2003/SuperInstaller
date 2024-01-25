@@ -55,7 +55,6 @@ local function progressInstall(opt)
 			if percent then
 				result = "Cloing: " .. percent .. "%"
 				vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
-				vim.api.nvim_win_set_cursor(win, { win_height, 0 })
 			end
 		end
 		handle:close()
