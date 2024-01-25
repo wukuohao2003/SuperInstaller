@@ -77,7 +77,7 @@ M.setup = function(config)
 	}, config or {})
 	vim.cmd(
 		"command! SuperSyncDownload "
-			.. "SuperSyncdDownload({progress_bar ="
+			.. "lua require('SuperInstaller').SuperSyncdDownload({progress_bar ="
 			.. tostring(configure.display.progress_bar.enable)
 			.. ","
 			.. "use ="
