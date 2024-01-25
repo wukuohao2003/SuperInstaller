@@ -45,12 +45,9 @@ local function progressInstall(opt)
 	for _, use in ipairs(opt.use) do
 		local job_id = vim.fn.jobstart(installMethods({ mode = opt.mode, use = use }), {
 			on_stdout = function(_, data, _)
-				for _, line in ipairs(data) do
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { line })
-					local progress = string.match(line, "^Receiving objects: (%d+)%%")
-					if progress then
-						print("Download progress: " .. progress .. "%")
-					end
+				local progress = string.match(vim.inspect(data), "^Receiving objects: (%d+)%%")
+				if progress then
+					print("Download progress: " .. progress .. "%")
 				end
 			end,
 		})
@@ -75,17 +72,13 @@ M.setup = function(config)
 		},
 		use = {},
 	}, config or {})
-	vim.cmd(
-		"command! SuperSyncDownload "
-			.. "lua require('SuperInstaller').SuperSyncdDownload({progress_bar ="
-			.. tostring(configure.display.progress_bar.enable)
-			.. ","
-			.. "use ="
-			.. vim.inspect(configure.use)
-			.. ","
-			.. "mode ="
-			.. configure.install_methods
-	)
+	vim.keymap.set("n", "<C-i>", function()
+		SuperSyncdDownload({
+			progress_bar = configure.display.progress_bar.enable,
+			use = configure.use,
+			mode = configure.install_methods,
+		})
+	end)
 end
 
 return {
