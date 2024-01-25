@@ -38,6 +38,8 @@ local function progressInstall(opt)
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
+		title = "Cloing From Git ...",
+		title_pos = "center",
 	}
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
@@ -85,7 +87,9 @@ M.setup = function(config)
 				enable = false,
 			},
 		},
-		use = {},
+		use = {
+			"wukuohao2003/SuperInstaller",
+		},
 	}, config or {})
 	vim.keymap.set("n", "<C-i>", function()
 		SuperSyncdDownload({
