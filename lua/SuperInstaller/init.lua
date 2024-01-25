@@ -81,7 +81,7 @@ M.setup = function(config)
 			.. tostring(configure.display.progress_bar.enable)
 			.. ","
 			.. "use ="
-			.. tostring(configure.use)
+			.. vim.inspect(configure.use)
 			.. ","
 			.. "mode ="
 			.. configure.install_methods
