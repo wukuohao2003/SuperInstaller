@@ -46,13 +46,13 @@ local function progressInstall(opt)
 		local command = installMethods({ mode = opt.mode, use = use })
 		local result = nil
 		local async_job = vim.fn.jobstart(command, {
-			on_stdout = function(_, data, _)
+			on_stdout = vim.schedule_warp(function(_, data, _)
 				local percent = data:match("(d%+)%%")
 				if percent then
 					result = "Cloing: " .. percent .. "%"
 					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { result })
 				end
-			end,
+			end),
 			on_exit = function(_, _)
 				vim.api.nvim_win_close(win, true)
 			end,
