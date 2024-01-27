@@ -44,13 +44,6 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	progress = tonumber(progress_line)
-	local progress_bar = string.rep("█", progress / 2)
-	vim.api.nvim_win_set_config(win, {
-		title = "Pulling From Git: " .. progress .. "%",
-		title_pos = "center",
-	})
-
 	for _, use in ipairs(opt.use) do
 		local command = installMethods({ mode = opt.mode, use = use })
 		local result = nil
