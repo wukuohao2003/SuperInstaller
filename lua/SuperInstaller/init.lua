@@ -55,7 +55,7 @@ local function progressInstall(opt)
 			end,
 			on_exit = function(_, code, _)
 				if code ~= 0 then
-					vim.api.nvim_buf_set_lines(buf, 0, 1, false, { code })
+					vim.api.nvim_buf_set_lines(buf, 0, 1, false, { tostring(code) })
 				else
 					vim.api.nvim_win_close(win, true)
 				end
