@@ -17,7 +17,7 @@ M.setup = function(config)
 		},
 	}, config or {})
 
-	local function lambda_download()
+	_G.lambda_download = function()
 		install.SuperAsyncDownload({
 			progress_bar = configure.display.progress_bar.enable,
 			use = configure.use,
@@ -25,7 +25,7 @@ M.setup = function(config)
 		})
 	end
 
-	vim.cmd("command! SuperAsyncDownload lua require('SuperInstaller').setup().lambda_download()")
+	vim.cmd("command! SuperAsyncDownload lua require('SuperInstaller').lambda_download()")
 end
 
 return {
