@@ -34,7 +34,7 @@ local function progressInstall(mode, use)
 		relative = "editor",
 		row = win_row,
 		col = win_col,
-		width = win_width,
+		width = win_width + 1 + 1,
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
@@ -55,7 +55,7 @@ local function progressInstall(mode, use)
 					0,
 					-1,
 					false,
-					{ string.rep("█", math.ceil(50 / tonumber(result) * 100)) }
+					{ string.rep("█", math.floor(50 / tonumber(result) * 100)) }
 				)
 			end
 		end,
