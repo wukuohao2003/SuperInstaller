@@ -1,6 +1,6 @@
 local M = {}
 
-local install = require("methods.SuperAsyncdDownload")
+local install = require("methods.SuperAsyncDownload")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {

@@ -67,7 +67,7 @@ local function progressInstall(mode, use)
 	})
 end
 
-M.SuperAsyncdDownload = function(opt)
+M.SuperAsyncDownload = function(opt)
 	if opt.progress_bar == "true" then
 		local newTable = load("return " .. opt.use)()
 		for _, use in ipairs(newTable) do
@@ -79,5 +79,5 @@ M.SuperAsyncdDownload = function(opt)
 end
 
 return {
-	SuperSyncdDownload = M.SuperAsyncdDownload,
+	SuperAsyncDownload = M.SuperAsyncDownload,
 }
