@@ -1,5 +1,7 @@
 local M = {}
 
+local dkjson = require("dkjson")
+
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function Mode(mode)
@@ -69,8 +71,7 @@ end
 
 M.SuperAsyncDownload = function(opt)
 	if opt.progress_bar == "true" then
-		local newTable = load("return " .. opt.use)()
-		for _, use in ipairs(newTable) do
+		for _, use in ipairs(dkjson.decode(opt.use)) do
 			progressInstall(opt.mode, use)
 		end
 	else

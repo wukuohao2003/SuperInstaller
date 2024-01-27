@@ -2,7 +2,7 @@ local M = {}
 
 local install = require("SuperInstaller.methods.SuperAsyncDownLoad")
 
-local cjson = require("cjson")
+local dkjson = require("dkjson")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
@@ -23,12 +23,12 @@ M.setup = function(config)
 			mode = configure.install_methods,
 		})
 	end)
-	print(cjson.decode(vim.inspect(configure.use)))
+	print(dkjson.decode(dkjson.encode(configure.use)))
 	vim.cmd(
 		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
 			.. tostring(configure.display.progress_bar)
 			.. ", use = "
-			.. vim.inspect(configure.use)
+			.. dkjson.encode(configure.use)
 			.. ", mode = '"
 			.. configure.install_methods
 			.. "'})"
