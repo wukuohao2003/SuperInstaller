@@ -71,7 +71,7 @@ end
 
 M.SuperAsyncDownload = function(opt)
 	if opt.progress_bar == "true" then
-		for _, use in ipairs(dkjson.decode(opt.use)) do
+		for _, use in ipairs(opt.use) do
 			progressInstall(opt.mode, use)
 		end
 	else
