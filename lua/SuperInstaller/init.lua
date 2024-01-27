@@ -18,6 +18,7 @@ M.setup = function(config)
 	}, config or {})
 
 	_G.lambda_download = function()
+		print(install)
 		install.SuperAsyncDownload({
 			progress_bar = configure.display.progress_bar.enable,
 			use = configure.use,
