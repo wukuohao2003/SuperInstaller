@@ -17,7 +17,11 @@ M.setup = function(config)
 			.. dkjson.encode(configure.use)
 			.. ")"
 	)
-	print(type(dkjson.encode(configure.use)))
+	print(
+		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload("
+			.. dkjson.encode(configure.use)
+			.. ")"
+	)
 end
 
 return {
