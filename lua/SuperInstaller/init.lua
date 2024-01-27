@@ -38,7 +38,7 @@ local function progressInstall(mode, use)
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
-		title = "Cloing " .. vim.split(use, "/")[2] .. " From Git ...",
+		title = "Cloing From Git ...",
 		title_pos = "center",
 	}
 
@@ -52,10 +52,10 @@ local function progressInstall(mode, use)
 			if result then
 				vim.api.nvim_buf_set_lines(
 					buf,
-					0,
+					1,
 					-1,
 					false,
-					{ string.rep("█", math.ceil(50 * tonumber(result) * 0.01)) }
+					{ string.rep("█", math.ceil(49 / tonumber(result) * 100)) }
 				)
 			end
 		end,
@@ -67,10 +67,15 @@ local function progressInstall(mode, use)
 	})
 end
 
-local function SuperSyncdDownload(opt)
-	if opt.progress_bar then
-		for _, use in ipairs(opt.use) do
-			progressInstall(opt.mode, use)
+local function SuperAsyncdDownload(opt)
+	if opt.progress_bar == "true" then
+		if type(opt.use) then
+			local newTable = load("return " .. opt.use)()
+			for _, use in ipairs(opt.use) do
+				progressInstall(opt.mode, use)
+			end
+		else
+			return
 		end
 	else
 		return
@@ -89,7 +94,22 @@ M.setup = function(config)
 			"wukuohao2003/SuperInstaller",
 		},
 	}, config or {})
-	vim.cmd("command! -nargs=0 SuperAsyncDownload lua require('SuperInstaller').setup()")
+	vim.keymap.set("n", "<C-i>", function()
+		SuperAsyncdDownload({
+			progress_bar = configure.display.progress_bar.enable,
+			use = configure.use,
+			mode = configure.install_methods,
+		})
+	end)
+	vim.cmd(
+		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
+			.. tostring(configure.display.progress_bar)
+			.. ", use = "
+			.. vim.inspect(config.use)
+			.. ", mode = '"
+			.. config.install_methods
+			.. "'})"
+	)
 end
 
 return {
