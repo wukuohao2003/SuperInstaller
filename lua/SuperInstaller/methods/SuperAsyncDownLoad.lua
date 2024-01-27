@@ -72,9 +72,6 @@ end
 M.SuperAsyncDownload = function(opt)
 	print(opt)
 	if opt.progress_bar == "true" then
-		for _, use in ipairs(opt.use) do
-			progressInstall(opt.mode, use)
-		end
 	else
 		return
 	end
