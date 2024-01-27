@@ -17,7 +17,7 @@ M.setup = function(config)
 			.. dkjson.encode(configure.use)
 			.. ")"
 	)
-	print(dkjson.encode(configure.use))
+	print(type(dkjson.encode(configure.use)))
 end
 
 return {
