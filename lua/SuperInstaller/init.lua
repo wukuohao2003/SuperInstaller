@@ -59,7 +59,7 @@ local function progressInstall(opt)
 				result = string.match(data[1], "^Receiving deltas: (%d+)%%")
 				local length = #opt.use
 				local block = 50 / length
-				local progress = math.ceil(block * tonumber(result))
+				local progress = math.ceil(block * (tonumber(result) * 0.01))
 				print(progress)
 			end,
 		})
