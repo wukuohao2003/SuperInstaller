@@ -57,10 +57,8 @@ local function progressInstall(opt)
 		local async_job = vim.fn.jobstart(command, {
 			on_stderr = function(job_id, data, event)
 				result = string.match(data[1], "^Receiving deltas: (%d+)%%")
-				local length = #opt.use
-				local block = 50 / length
-				local progress = math.ceil(block * (tonumber(result) * 0.01))
-				print(progress)
+
+				print(result)
 			end,
 		})
 	end
