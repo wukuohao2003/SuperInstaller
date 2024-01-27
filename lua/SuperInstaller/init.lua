@@ -69,7 +69,7 @@ end
 
 local function SuperAsyncdDownload(opt)
 	if opt.progress_bar == "true" then
-		if type(opt.use) then
+		if type(opt.use) == "table" then
 			local newTable = load("return " .. opt.use)()
 			for _, use in ipairs(opt.use) do
 				progressInstall(opt.mode, use)
