@@ -12,7 +12,7 @@ M.setup = function(config)
 		},
 	}, config or {})
 
-	local install_cmd = "lua require('SuperInstaller').SuperAsyncDownload({option = "
+	local install_cmd = "lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload({option = "
 		.. dkjson.encode(configure.use)
 		.. "})"
 
