@@ -16,16 +16,9 @@ M.setup = function(config)
 			"wukuohao2003/SuperInstaller",
 		},
 	}, config or {})
-	vim.keymap.set("n", "<C-i>", function()
-		install.SuperAsyncdDownload({
-			progress_bar = configure.display.progress_bar.enable,
-			use = configure.use,
-			mode = configure.install_methods,
-		})
-	end)
 
 	local function lambda_download()
-		install.SuperAsyncdDownload({
+		install.SuperAsyncDownload({
 			progress_bar = configure.display.progress_bar.enable,
 			use = configure.use,
 			mode = configure.install_methods,
