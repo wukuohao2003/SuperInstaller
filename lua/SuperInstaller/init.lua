@@ -53,14 +53,14 @@ local function progressInstall(opt)
 				if result then
 					vim.api.nvim_buf_set_lines(
 						buf,
-						0,
+						1,
 						-1,
 						false,
-						{ string.rep("█", math.ceil(50 / tonumber(result) * 100)) }
+						{ string.rep("█", math.ceil(49 / tonumber(result) * 100)) }
 					)
 				end
 			end,
-			en_exit = function(job_id, code, event)
+			on_exit = function(job_id, code, event)
 				if code == 0 then
 					vim.api.nvim_win_close(win, true)
 				end
