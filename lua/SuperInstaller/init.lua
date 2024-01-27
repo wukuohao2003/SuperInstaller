@@ -52,10 +52,10 @@ local function progressInstall(mode, use)
 			if result then
 				vim.api.nvim_buf_set_lines(
 					buf,
-					1,
+					0,
 					-1,
 					false,
-					{ string.rep("█", math.ceil(49 / tonumber(result) * 100)) }
+					{ string.rep("█", math.ceil(50 / tonumber(result) * 100)) }
 				)
 			end
 		end,
