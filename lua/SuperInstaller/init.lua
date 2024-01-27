@@ -2,7 +2,7 @@ local M = {}
 
 local install = require("SuperInstaller.methods.SuperAsyncDownLoad")
 
-local dkjson = require("dependence.share.lua.5.4.dkjson")
+local dkjson = require("dependence.share.lua.dkjson.dkjson")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
