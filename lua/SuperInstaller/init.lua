@@ -13,7 +13,7 @@ M.setup = function(config)
 	}, config or {})
 
 	vim.cmd(
-		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload("
+		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload(option = "
 			.. dkjson.encode(configure.use)
 			.. ")"
 	)
