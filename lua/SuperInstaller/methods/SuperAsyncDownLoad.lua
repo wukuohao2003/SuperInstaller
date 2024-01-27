@@ -1,6 +1,6 @@
 local M = {}
 
-local dkjson = require("dkjson")
+local dkjson = require("dependence.share.lua.5.4.dkjson")
 
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
