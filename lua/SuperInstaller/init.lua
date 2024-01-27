@@ -50,7 +50,7 @@ local function progressInstall(opt)
 		local async_job = vim.fn.jobstart(command, {
 			on_stderr = function(job_id, data, event)
 				print(vim.inspect(data))
-				result = string.match(data[1], "^Resoving deltas: (%d+)%%")
+				result = string.match(data[1], "^Resolving deltas: (%d+)%%")
 
 				print(result)
 			end,
