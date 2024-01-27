@@ -19,7 +19,7 @@ local function installMethods(opt)
 	if exists then
 		return ("cd " .. install_path .. "/" .. vim.split(opt.use, "/")[2] .. " && git pull")
 	else
-		return ("git clone " .. mode .. opt.use .. " " .. install_path .. "/" .. vim.split(opt.use, "/")[2])
+		return ("git clone --progress " .. mode .. opt.use .. " " .. install_path .. "/" .. vim.split(opt.use, "/")[2])
 	end
 end
 
