@@ -50,14 +50,7 @@ local function progressInstall(opt)
 		local async_job = vim.fn.jobstart(command, {
 			on_stdout = function(_, data, _)
 				for _, item in ipairs(data) do
-					print(item)
-					if item.progress then
-						local percent = tonumber(item.progress)
-						if percent then
-							result = "Cloing: " .. tostring(percent) .. "%"
-							vim.api.nvim_buf_set_lines(buf, 0, 1, false, { result })
-						end
-					end
+					vim.api.nvim_buf_set_lines(buf, 0, 1, false, { item })
 				end
 			end,
 			on_exit = function(_, code, _)
