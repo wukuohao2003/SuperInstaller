@@ -1,6 +1,6 @@
 local M = {}
 
-local install = require("methods.SuperAsyncInstall")
+local install = require("./methods/SuperAsyncInstall.lua")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
