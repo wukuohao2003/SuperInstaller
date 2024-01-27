@@ -4,9 +4,11 @@ local dkjson = require("SuperInstaller.dependence.share.lua.dkjson.dkjson")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
-		install_methods = "ssh",
 		use = {
-			"wukuohao2003/SuperInstaller",
+			git = "ssh",
+			repositories = {
+				"wukuohao2003/SuperInstaller",
+			},
 		},
 	}, config or {})
 
@@ -23,7 +25,7 @@ M.setup = function(config)
 			.. ", use = "
 			.. dkjson.encode(configure.use)
 			.. ", mode = '"
-			.. configure.install_methods
+			.. configure.use.git
 			.. "'})"
 	)
 	print(dkjson.encode({
