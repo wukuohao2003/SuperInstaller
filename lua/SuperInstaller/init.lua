@@ -34,11 +34,11 @@ local function progressInstall(mode, use)
 		relative = "editor",
 		row = win_row,
 		col = win_col,
-		width = win_width + 1 + 1,
+		width = win_width,
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
-		title = "Cloing " .. use .. " From Git ...",
+		title = "Cloing " .. vim.split(use, "/")[2] .. " From Git ...",
 		title_pos = "center",
 	}
 
@@ -55,7 +55,7 @@ local function progressInstall(mode, use)
 					0,
 					-1,
 					false,
-					{ string.rep("█", math.floor(50 / tonumber(result) * 100)) }
+					{ string.rep("█", math.ceil(50 * tonumber(result) * 0.01)) }
 				)
 			end
 		end,
