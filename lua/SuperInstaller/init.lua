@@ -12,16 +12,11 @@ M.setup = function(config)
 		},
 	}, config or {})
 
-	vim.cmd(
-		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({option = "
-			.. dkjson.encode(configure.use)
-			.. "})"
-	)
-	print(
-		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload("
-			.. dkjson.encode(configure.use)
-			.. ")"
-	)
+	local install_cmd = "lua require('SuperInstaller').SuperAsyncDownload({option = "
+		.. dkjson.encode(configure.use)
+		.. "})"
+
+	vim.cmd("command! SuperAsyncDownload " .. install_cmd)
 end
 
 return {
