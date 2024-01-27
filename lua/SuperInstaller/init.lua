@@ -89,13 +89,7 @@ M.setup = function(config)
 			"wukuohao2003/SuperInstaller",
 		},
 	}, config or {})
-	vim.keymap.set("n", "<C-i>", function()
-		SuperSyncdDownload({
-			progress_bar = configure.display.progress_bar.enable,
-			use = configure.use,
-			mode = configure.install_methods,
-		})
-	end)
+	vim.cmd("command! -nargs=0 SuperAsyncDownload lua require('super_installer').setup()")
 end
 
 return {
