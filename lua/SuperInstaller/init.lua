@@ -51,6 +51,9 @@ local function progressInstall(opt)
 			on_stdout = function(job_id, data, event)
 				print("job_id:" .. job_id .. "--" .. "result:" .. vim.inspect(data):gsub("%s+", ""):gsub("%c+", ""))
 			end,
+			on_stderr = function(job_id, data, event)
+				print(data)
+			end,
 		})
 	end
 end
