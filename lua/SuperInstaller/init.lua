@@ -1,6 +1,6 @@
 local M = {}
 
-local install = require("SuperInstaller.methods.SuperAsyncInstall")
+local install = require("methods.SuperAsyncdDownload")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
@@ -22,7 +22,7 @@ M.setup = function(config)
 		})
 	end)
 	vim.cmd(
-		"command! SuperSyncdDownload lua require('methods.SuperAsyncInstall').SuperAsyncDownload({progress_bar = "
+		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
 			.. tostring(configure.display.progress_bar)
 			.. ", use = "
 			.. vim.inspect(configure.use)
