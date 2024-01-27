@@ -23,7 +23,7 @@ local function installMethods(opt)
 	end
 end
 
-local function progressInstall(opt)
+local function progressInstall(mode, use)
 	local win_width = 50
 	local win_height = 1
 	local win_row = math.floor((vim.o.lines - win_height) / 2)
@@ -44,34 +44,34 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	for _, use in ipairs(opt.use) do
-		local command = installMethods({ mode = opt.mode, use = use })
-		local result = nil
-		local async_job = vim.fn.jobstart(command, {
-			on_stderr = function(job_id, data, event)
-				result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
-				if result then
-					vim.api.nvim_buf_set_lines(
-						buf,
-						1,
-						-1,
-						false,
-						{ string.rep("█", math.ceil(49 / tonumber(result) * 100)) }
-					)
-				end
-			end,
-			on_exit = function(job_id, code, event)
-				if code == 0 then
-					vim.api.nvim_win_close(win, true)
-				end
-			end,
-		})
-	end
+	local command = installMethods({ mode = mode, use = use })
+	local result = nil
+	local async_job = vim.fn.jobstart(command, {
+		on_stderr = function(job_id, data, event)
+			result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
+			if result then
+				vim.api.nvim_buf_set_lines(
+					buf,
+					1,
+					-1,
+					false,
+					{ string.rep("█", math.ceil(49 / tonumber(result) * 100)) }
+				)
+			end
+		end,
+		on_exit = function(job_id, code, event)
+			if code == 0 then
+				vim.api.nvim_win_close(win, true)
+			end
+		end,
+	})
 end
 
 local function SuperSyncdDownload(opt)
 	if opt.progress_bar then
-		progressInstall(opt)
+		for _, use in ipairs(opt.use) do
+			progressInstall(opt.mode, use)
+		end
 	else
 		return
 	end
