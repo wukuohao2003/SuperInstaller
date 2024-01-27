@@ -60,6 +60,11 @@ local function progressInstall(opt)
 					)
 				end
 			end,
+			en_exit = function(job_id, code, event)
+				if code == 0 then
+					vim.api.nvim_win_close(win, true)
+				end
+			end,
 		})
 	end
 end
