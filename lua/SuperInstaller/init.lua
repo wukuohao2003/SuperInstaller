@@ -48,11 +48,9 @@ local function progressInstall(opt)
 		local command = installMethods({ mode = opt.mode, use = use })
 		local result = nil
 		local async_job = vim.fn.jobstart(command, {
-			on_stdout = function(job_id, data, event)
-				print("job_id:" .. job_id .. "--" .. "result:" .. vim.inspect(data):gsub("%s+", ""):gsub("%c+", ""))
-			end,
 			on_stderr = function(job_id, data, event)
-				print(vim.inspect(data))
+				result = string.match(data[1], "^Receiving deltas: (%d+)%%")
+				vim.api.nvim_buf_set_lines(buf, 0, 1, false, { result })
 			end,
 		})
 	end
