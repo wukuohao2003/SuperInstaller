@@ -44,13 +44,23 @@ local function progressInstall(opt)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
+	progress = tonumber(progress_line)
+	local progress_bar = string.rep("█", progress / 2)
+	vim.api.nvim_win_set_config(win, {
+		title = "Pulling From Git: " .. progress .. "%",
+		title_pos = "center",
+	})
+
 	for _, use in ipairs(opt.use) do
 		local command = installMethods({ mode = opt.mode, use = use })
 		local result = nil
 		local async_job = vim.fn.jobstart(command, {
 			on_stderr = function(job_id, data, event)
 				result = string.match(data[1], "^Receiving deltas: (%d+)%%")
-				vim.api.nvim_buf_set_lines(buf, 0, 1, false, { result })
+				local length = #opt.use
+				local block = 50 / length
+				local progress = math.ceil(block * tonumber(result))
+				print(progress)
 			end,
 		})
 	end
