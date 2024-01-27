@@ -13,12 +13,9 @@ M.setup = function(config)
 	}, config or {})
 
 	vim.cmd(
-		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = true"
-			.. ", use = "
+		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload("
 			.. dkjson.encode(configure.use)
-			.. ", mode = '"
-			.. configure.use.git
-			.. "'})"
+			.. ")"
 	)
 	print(dkjson.encode({
 		"wukuohao2003/SuperInstaller",
