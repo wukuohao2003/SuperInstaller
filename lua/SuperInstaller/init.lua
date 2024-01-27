@@ -50,10 +50,15 @@ local function progressInstall(opt)
 		local async_job = vim.fn.jobstart(command, {
 			on_stderr = function(job_id, data, event)
 				result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
-				local length = #opt.use
-				local block = math.ceil(50 / length)
-				local progress = math.ceil(block / tonumber(result))
-				print(progress)
+				if result then
+					vim.api.nvim_buf_set_lines(
+						buf,
+						0,
+						-1,
+						false,
+						{ string.rep("█", math.ceil(50 / tonumber(result))) }
+					)
+				end
 			end,
 		})
 	end
