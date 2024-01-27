@@ -17,9 +17,7 @@ M.setup = function(config)
 			.. dkjson.encode(configure.use)
 			.. ")"
 	)
-	print(dkjson.encode({
-		"wukuohao2003/SuperInstaller",
-	}))
+	print(dkjson.encode(configure.use))
 end
 
 return {
