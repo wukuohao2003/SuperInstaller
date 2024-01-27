@@ -2,6 +2,8 @@ local M = {}
 
 local install = require("SuperInstaller.methods.SuperAsyncDownLoad")
 
+local cjson = require("cjson")
+
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
 		install_methods = "ssh",
@@ -21,7 +23,7 @@ M.setup = function(config)
 			mode = configure.install_methods,
 		})
 	end)
-	print(vim.inspect(configure.use))
+	print(cjson.decode(vim.inspect(configure.use)))
 	vim.cmd(
 		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
 			.. tostring(configure.display.progress_bar)
