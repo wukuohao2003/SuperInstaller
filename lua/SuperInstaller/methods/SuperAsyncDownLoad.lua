@@ -71,8 +71,4 @@ end
 
 local function SuperAsyncDownload(opt)
 	print(opt)
-	if opt.progress_bar == "true" then
-	else
-		return
-	end
 end
