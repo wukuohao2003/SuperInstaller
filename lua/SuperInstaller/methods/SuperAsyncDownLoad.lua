@@ -70,5 +70,5 @@ local function progressInstall(mode, use)
 end
 
 local function SuperAsyncDownload(opt)
-	print(opt)
+	print(dkjson.decode(opt.option))
 end
