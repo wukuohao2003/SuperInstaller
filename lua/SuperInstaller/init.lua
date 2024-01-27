@@ -38,7 +38,7 @@ local function progressInstall(mode, use)
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
-		title = "Cloing From Git ...",
+		title = "Cloing " .. use .. " From Git ...",
 		title_pos = "center",
 	}
 
