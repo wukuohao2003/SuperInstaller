@@ -23,9 +23,8 @@ M.setup = function(config)
 			mode = configure.install_methods,
 		})
 	end)
-	print(dkjson.encode(configure.use))
 	vim.cmd(
-		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
+		"command! SuperSyncdDownload lua require('SuperInstaller.methods.SuperAsyncDownLoad').SuperAsyncDownload({progress_bar = "
 			.. tostring(configure.display.progress_bar)
 			.. ", use = "
 			.. dkjson.encode(configure.use)
