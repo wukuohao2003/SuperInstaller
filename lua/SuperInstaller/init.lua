@@ -25,7 +25,7 @@ M.setup = function(config)
 		})
 	end
 
-	vim.cmd("command! SuperAsyncDownload lua require('SuperInstaller').lambda_download()")
+	vim.cmd("command! SuperAsyncDownload lua require('SuperInstaller').setup().lambda_download()")
 end
 
 return {
