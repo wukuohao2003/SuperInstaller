@@ -69,14 +69,10 @@ local function progressInstall(mode, use)
 	})
 end
 
-M.SuperAsyncDownload = function(opt)
+local function SuperAsyncDownload(opt)
 	print(opt)
 	if opt.progress_bar == "true" then
 	else
 		return
 	end
 end
-
-return {
-	SuperAsyncDownload = M.SuperAsyncDownload,
-}

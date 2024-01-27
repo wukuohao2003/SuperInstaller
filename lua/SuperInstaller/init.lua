@@ -1,7 +1,5 @@
 local M = {}
 
-local install = require("SuperInstaller.methods.SuperAsyncDownLoad")
-
 local dkjson = require("SuperInstaller.dependence.share.lua.dkjson.dkjson")
 
 M.setup = function(config)
@@ -17,16 +15,15 @@ M.setup = function(config)
 		},
 	}, config or {})
 
-	_G.lambda_download = function()
-		print(install)
-		install.SuperAsyncDownload({
-			progress_bar = configure.display.progress_bar.enable,
-			use = configure.use,
-			mode = configure.install_methods,
-		})
-	end
-
-	vim.cmd("command! SuperAsyncDownload lua require('SuperInstaller').setup().lambda_download()")
+	vim.cmd(
+		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
+			.. tostring(configure.display.progress_bar)
+			.. ", use = "
+			.. dkjson.encode(configure.use)
+			.. ", mode = '"
+			.. configure.install_methods
+			.. "'})"
+	)
 end
 
 return {
