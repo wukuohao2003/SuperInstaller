@@ -21,6 +21,7 @@ M.setup = function(config)
 			mode = configure.install_methods,
 		})
 	end)
+	print(vim.inspect(configure.use))
 	vim.cmd(
 		"command! SuperSyncdDownload lua require('SuperInstaller').SuperAsyncDownload({progress_bar = "
 			.. tostring(configure.display.progress_bar)
