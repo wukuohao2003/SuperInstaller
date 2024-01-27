@@ -49,7 +49,7 @@ local function progressInstall(opt)
 		local result = nil
 		local async_job = vim.fn.jobstart(command, {
 			on_stdout = function(job_id, data, event)
-				print("job_id:" .. job_id .. "--" .. "result:" .. vim.inspect(data))
+				print("job_id:" .. job_id .. "--" .. "result:" .. vim.inspect(data):gsub("%s+", ""):gsub("%c+", ""))
 			end,
 		})
 	end
