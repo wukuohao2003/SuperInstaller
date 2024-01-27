@@ -89,7 +89,7 @@ M.setup = function(config)
 			"wukuohao2003/SuperInstaller",
 		},
 	}, config or {})
-	vim.cmd("command! -nargs=0 SuperAsyncDownload lua require('super_installer').setup()")
+	vim.cmd("command! -nargs=0 SuperAsyncDownload lua require('SuperInstaller').setup()")
 end
 
 return {
