@@ -14,16 +14,12 @@ M.setup = function(config)
 
 	local json_configure = dkjson.encode(configure.use)
 
-	print(json_configure)
-
 	vim.env.JSON_CONFIGURE = json_configure
-
-	print(vim.fn.getenv("JSON_CONFIGURE"))
-
-	vim.cmd(
-		"command! SuperAsyncDownload lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload(vim.fn.getenv('JSON_CONFIGURE'))"
-	)
 end
+
+vim.cmd(
+	"command! SuperAsyncDownload lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload(vim.fn.getenv('JSON_CONFIGURE'))"
+)
 
 return {
 	setup = M.setup,
