@@ -1,7 +1,3 @@
-vim.cmd(
-	"command! SuperAsyncDownload lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload(vim.fn.getenv('JSON_CONFIGURE'))"
-)
-
 local M = {}
 
 local dkjson = require("SuperInstaller.dependence.share.lua.dkjson.dkjson")
@@ -20,6 +16,14 @@ M.setup = function(config)
 
 	vim.env.JSON_CONFIGURE = json_configure
 end
+
+local command_trigger = function()
+	vim.cmd(
+		"command! SuperAsyncDownload lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload(vim.fn.getenv('JSON_CONFIGURE'))"
+	)
+end
+
+command_trigger()
 
 return {
 	setup = M.setup,
