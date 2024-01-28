@@ -1,3 +1,5 @@
+local M = {}
+
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function Mode(mode)
@@ -65,6 +67,10 @@ local function progressInstall(mode, use)
 	})
 end
 
-local function SuperAsyncDownload(opt)
+M.SuperAsyncDownload = function(opt)
 	print(opt)
 end
+
+return {
+	SuperAsyncDownload = M.SuperAsyncDownload,
+}
