@@ -2,7 +2,7 @@ local M = {}
 
 local dkjson = require("SuperInstaller.dependence.share.lua.dkjson.dkjson")
 
-local current_dir = debug.getinfo(1, "S").source:match([[^@?(.*[\/])[^\/]-$]])
+local current_dir = os.getenv("PWD")
 
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
