@@ -50,7 +50,7 @@ local function progressInstall(mode, use)
 	local result = nil
 	local async_job = vim.fn.jobstart(command, {
 		on_stderr = function(job_id, data, event)
-			print(data)
+			print(data[1])
 			result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
 			if result then
 				vim.api.nvim_buf_set_lines(
