@@ -2,6 +2,8 @@ local M = {}
 
 local dkjson = require("SuperInstaller.dependence.share.lua.dkjson.dkjson")
 
+local current_dir = debug.getinfo(1, "S").source:match([[^@?(.*[\/])[^\/]-$]])
+
 M.setup = function(config)
 	local configure = vim.tbl_extend("force", {
 		use = {
@@ -15,6 +17,10 @@ M.setup = function(config)
 	local json_configure = dkjson.encode(configure.use)
 
 	vim.env.JSON_CONFIGURE = json_configure
+end
+
+if vim.fn.filereadable(vim.fn.expand(current_dir .. "/init.lua")) then
+	vim.cmd("luafile " .. current_dir .. "/init.lua")
 end
 
 vim.cmd(
