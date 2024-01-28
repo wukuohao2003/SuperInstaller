@@ -71,9 +71,7 @@ end
 
 M.SuperAsyncDownload = function(opt)
 	local option = dkjson.decode(opt)
-	for _, value in ipairs(option.repositories) do
-		progressInstall(git_mode, value)
-	end
+	print(option.repositories)
 end
 
 return {
