@@ -66,7 +66,5 @@ local function progressInstall(mode, use)
 end
 
 local function SuperAsyncDownload(opt)
-	for _, use in ipairs(opt.repositories) do
-		progressInstall(opt.git, use)
-	end
+	print(opt)
 end
