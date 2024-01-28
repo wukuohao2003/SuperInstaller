@@ -16,9 +16,9 @@ M.setup = function(config)
 
 	vim.cmd(
 		"command! SuperAsyncDownload "
-			.. [[lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload("]]
+			.. "lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload("
 			.. json_configure
-			.. [[")]]
+			.. ")"
 	)
 end
 
