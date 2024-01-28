@@ -1,5 +1,7 @@
 local M = {}
 
+local dkjson = require("SuperInstaller.dependence.share.lua.dkjson.dkjson")
+
 local install_path = vim.fn.stdpath("data") .. "/site/super_installer/start"
 
 local function Mode(mode)
@@ -68,7 +70,10 @@ local function progressInstall(mode, use)
 end
 
 M.SuperAsyncDownload = function(opt)
-	print(opt)
+	local option = dkjson.decode(opt)
+	for _, value in ipairs(option.repositories) do
+		progressInstall(option.git, value)
+	end
 end
 
 return {
