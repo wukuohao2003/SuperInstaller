@@ -12,7 +12,9 @@ M.setup = function(config)
 		},
 	}, config or {})
 
-	vim.env.JSON_CONFIGURE = configure.use
+	local json_configure = dkjson.encode(configure.use)
+
+	vim.env.JSON_CONFIGURE = json_configure
 
 	vim.cmd(
 		"command! SuperAsyncDownload "
