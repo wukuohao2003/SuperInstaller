@@ -71,7 +71,7 @@ end
 
 M.SuperAsyncDownload = function(opt)
 	local option = dkjson.decode(opt)
-	print(option)
+	print(option.git_mode)
 end
 
 return {
