@@ -16,6 +16,8 @@ M.setup = function(config)
 
 	vim.env.JSON_CONFIGURE = json_configure
 
+	print(vim.fn.getenv("JSON_CONFIGURE"))
+
 	local command_trigger = function()
 		vim.cmd(
 			"command! SuperAsyncDownload lua require('SuperInstaller.methods.SuperAsyncDownload').SuperAsyncDownload(vim.fn.getenv('JSON_CONFIGURE'))"
