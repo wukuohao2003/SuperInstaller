@@ -40,7 +40,7 @@ local function progressInstall(mode, use)
 		height = win_height,
 		style = "minimal",
 		border = "rounded",
-		title = "Cloing " .. vim.split(use, "/")[2] .. " From Git ...",
+		title = "Download " .. vim.split(use, "/")[2] .. " From Git ...",
 		title_pos = "center",
 	}
 
@@ -51,7 +51,7 @@ local function progressInstall(mode, use)
 	local async_job = vim.fn.jobstart(command, {
 		on_stderr = function(job_id, data, event)
 			result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
-			print(result)
+			print(data[1], result)
 			if result then
 				vim.api.nvim_buf_set_lines(
 					buf,
