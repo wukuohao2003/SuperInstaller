@@ -46,35 +46,35 @@ local function progressInstall(mode, use)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	local command = installMethods({ mode = mode, use = use })
-	local result = nil
-	local async_job = vim.fn.jobstart(command, {
-		on_stderr = function(job_id, data, event)
-			result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
-			print(result)
-			if result then
-				vim.api.nvim_buf_set_lines(
-					buf,
-					0,
-					-1,
-					false,
-					{ string.rep("█", math.ceil(50 * tonumber(result) / 100)) }
-				)
-			end
-		end,
-		on_exit = function(job_id, code, event)
-			if code == 0 then
-				vim.api.nvim_win_close(win, true)
-			end
-		end,
-	})
+	for index, value in ipairs(use) do
+		local command = installMethods({ mode = mode, use = value })
+		local result = nil
+		local async_job = vim.fn.jobstart(command, {
+			on_stderr = function(job_id, data, event)
+				result = string.match(data[1], "^Resolving deltas:  (%d+)%%")
+				print(result)
+				if result then
+					vim.api.nvim_buf_set_lines(
+						buf,
+						0,
+						-1,
+						false,
+						{ string.rep("█", math.ceil(50 * tonumber(result) / 100)) }
+					)
+				end
+			end,
+			on_exit = function(job_id, code, event)
+				if code == 0 then
+					vim.api.nvim_win_close(win, true)
+				end
+			end,
+		})
+	end
 end
 
 M.SuperAsyncDownload = function(opt)
 	local option = dkjson.decode(opt)
-	for _, value in ipairs(option.repositories) do
-		progressInstall(option.git, value)
-	end
+	progressInstall(option.git, option.repositories)
 end
 
 return {
