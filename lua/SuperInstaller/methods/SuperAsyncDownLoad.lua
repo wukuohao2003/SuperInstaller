@@ -69,8 +69,6 @@ local function progressInstall(mode, use)
 			end
 		end,
 	})
-
-	vim.fn.jobwait({ tonumber(async_job) }, "w")
 end
 
 M.SuperAsyncDownload = function(opt)
