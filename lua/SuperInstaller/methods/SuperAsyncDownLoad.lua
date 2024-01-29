@@ -58,7 +58,7 @@ local function progressInstall(mode, use)
 					1,
 					-1,
 					false,
-					{ string.rep("█", math.ceil(49 / tonumber(result) * 100)) }
+					{ string.rep("█", math.ceil(50 / tonumber(result) * 100)) }
 				)
 			end
 		end,
